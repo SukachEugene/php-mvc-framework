@@ -1,7 +1,14 @@
 <?php
 
-require "src/controllers/products.php";
+$path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-$controller = new Products;
+$segments = explode("/", $path);
 
-$controller->index();
+
+$action = $segments[2];
+$controller = $segments[1];
+
+require "src/controllers/{$controller}.php";
+$controller_object = new $controller; // because of the same name
+
+$controller_object->$action();
