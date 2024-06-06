@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Framework;
 
 use ReflectionMethod;
+use Framework\Exceptions\PageNotFoundException;
+
 
 class Dispatcher
 {
     public function __construct(private Router $router, private Container $container)
     {
-        $this->router = $router;
     }
 
     public function handle(string $path)
@@ -18,7 +19,8 @@ class Dispatcher
         $params = $this->router->match($path);
 
         if ($params === false) {
-            exit("No route matched");
+
+            throw new PageNotFoundException("No route matched for {$path}");
         }
 
         $action = $this->getActionName($params);

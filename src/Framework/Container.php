@@ -6,6 +6,7 @@ namespace Framework;
 
 use ReflectionClass;
 use Closure;
+use InvalidArgumentException;
 use ReflectionNamedType;
 
 class Container
@@ -38,19 +39,19 @@ class Container
             $type = $parameter->getType();
 
             if ($type === null) {
-                exit("Constructor parameter '{$parameter->getName()}' 
+                throw new InvalidArgumentException("Constructor parameter '{$parameter->getName()}' 
                 in the class {$class_name} class 
                 has no type declaration");
             }
 
             if ( ! ($type instanceof ReflectionNamedType)) {
-                exit("Constructor parameter '{$parameter->getName()}' 
+                throw new InvalidArgumentException("Constructor parameter '{$parameter->getName()}' 
                 in the class {$class_name} class is an invalid type: '{$type}' 
                 - only single named types supported");
             }
 
             if ($type->isBuiltin()) {
-                exit("Unable to resolve constructor parameter 
+                throw new InvalidArgumentException("Unable to resolve constructor parameter 
                 '{$parameter->getName()}' 
                 of type '{$type}' in the {$class_name} class");
             }
