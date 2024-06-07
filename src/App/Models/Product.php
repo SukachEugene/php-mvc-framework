@@ -4,22 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Database;
-use PDO;
+use Framework\Model;
 
-class Product
+class Product extends Model
 {
-    public function __construct(private Database $database)
-    {
-        
-    }
-
-    public function getData(): array
-    {
-        $pdo = $this->database->getConnection();
-
-        $stmt = $pdo->query("SELECT * FROM product");
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    protected $table = "product";
 }
