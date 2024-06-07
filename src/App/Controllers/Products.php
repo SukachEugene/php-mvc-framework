@@ -12,7 +12,6 @@ class Products
 {
     public function __construct(private Viewer $viewer, private Product $model)
     {
-        
     }
 
     public function index()
@@ -39,5 +38,37 @@ class Products
     public function showPage(string $title, string $id, string $page)
     {
         echo $title, ' ', $id, ' ', $page;
+    }
+
+    public function new()
+    {
+        echo $this->viewer->render("shared/header.php", [
+            "title" => "New Product"
+        ]);
+
+        echo $this->viewer->render("Products/new.php");
+    }
+
+    public function create()
+    {
+        $data = [
+            "name" => $_POST["name"],
+            "description" => $_POST["description"]
+        ];
+
+        if ($this->model->insert($data)) {
+
+            header("Location: /products/{$this->model->getInsertId()}/show");
+            exit;
+            
+        } else {
+            echo $this->viewer->render("shared/header.php", [
+                "title" => "New Product"
+            ]);
+
+            echo $this->viewer->render("Products/new.php", [
+                "errors" => $this->model->getErrors()
+            ]);
+        }
     }
 }
