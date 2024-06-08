@@ -134,4 +134,14 @@ class Products
             "product" => $product
         ]);
     }
+
+    public function destroy(string $id)
+    {
+        $product = $this->getProduct($id);
+
+        $this->model->delete($id);
+
+        header("Location: /products/index");
+        exit;
+    }
 }
