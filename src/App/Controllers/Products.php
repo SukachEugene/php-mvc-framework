@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Product;
+use Framework\Controller;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Viewer;
 
-class Products
+class Products extends Controller
 {
-    public function __construct(private Viewer $viewer, private Product $model)
+    public function __construct(private Product $model)
     {
     }
 
@@ -70,8 +71,8 @@ class Products
     public function create()
     {
         $data = [
-            "name" => $_POST["name"],
-            "description" => empty($_POST["description"]) ? null : $_POST["description"]
+            "name" => $this->request->post["name"],
+            "description" => empty($this->request->post["description"]) ? null : $this->request->post["description"]
         ];
 
         if ($this->model->insert($data)) {
@@ -94,8 +95,8 @@ class Products
     {
         $product = $this->getProduct($id);
 
-        $product["name"] = $_POST["name"];
-        $product["description"] = empty($_POST["description"]) ? null : $_POST["description"];
+        $product["name"] = $this->request->post["name"];
+        $product["description"] = empty($this->request->post["description"]) ? null : $this->request->post["description"];
 
 
         if ($this->model->update($id, $product)) {
