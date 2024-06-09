@@ -7,7 +7,6 @@ namespace App\Controllers;
 use App\Models\Product;
 use Framework\Controller;
 use Framework\Exceptions\PageNotFoundException;
-use Framework\Viewer;
 
 class Products extends Controller
 {
@@ -19,8 +18,8 @@ class Products extends Controller
     {
         $products = $this->model->findAll();
 
-        echo $this->viewer->render("shared/header.php", ["title" => "Products"]);
-        echo $this->viewer->render("Products/index.php", [
+        echo $this->viewer->render("Products/index.mvc.php", [
+            "title" => "Products",
             "products" => $products,
             "total" => $this->model->getTotal()
         ]);
