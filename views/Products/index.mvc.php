@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.mvc.php" %}
 
-<head>
-    <title>{{ title }}</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-</head>
+{% block title %}Products{% endblock %}
 
-<body>
+{% block body %}
 
     <h1>Products</h1>
 
@@ -23,6 +18,4 @@
         </h2>
     {% endforeach; %}
 
-</body>
-
-</html>
+{% endblock %}
