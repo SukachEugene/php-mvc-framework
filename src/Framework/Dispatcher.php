@@ -15,7 +15,7 @@ class Dispatcher
     {
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): Response
     {
         $path = $this->getPath($request->uri);
 
@@ -35,9 +35,11 @@ class Dispatcher
 
         $controller_object->setViewer($this->container->get(TemplateViewerInterface::class));
 
+        $controller_object->setResponse($this->container->get(Response::class));
+
         $args = $this->getActionArguments($controller, $action, $params);
 
-        $controller_object->$action(...$args);
+        return $controller_object->$action(...$args);
     }
 
     private function getActionArguments(string $controller, string $action, array $params): array
