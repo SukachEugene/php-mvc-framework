@@ -2,12 +2,12 @@
 
 $router = new Framework\Router;
 
-$router->add("admin/{controller}/{action}", ["namespace" => "Admin"]);
+$router->add("/admin/{controller}/{action}", ["namespace" => "Admin"]);
 $router->add("/{title}/{id:\d+}/{page:\d+}", ["controller" => "products", "action" => "showPage"]);
 $router->add("/product/{slug:[\w-]+}", ["controller" => "products", "action" => "show"]);
 // $router->add("/{controller}/{id:\d+}/{action}");
 
-$router->add("/{controller}/{id:\d+}/show", ["action" => "show"]);
+$router->add("/{controller}/{id:\d+}/show", ["action" => "show", "middleware" => "message|message"]);
 $router->add("/{controller}/{id:\d+}/edit", ["action" => "edit"]);
 $router->add("/{controller}/{id:\d+}/update", ["action" => "update"]);
 $router->add("/{controller}/{id:\d+}/delete", ["action" => "delete"]);
